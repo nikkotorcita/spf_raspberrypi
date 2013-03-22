@@ -27,8 +27,6 @@ GPIO.setup(24, GPIO.OUT) # suction solenoid
 
 ser = None
 port = "/dev/ttyUSB0"
-arduino=None
-arduinoPort="/dev/ttyUSB1"
 for tries in range(1,5):
     try:
         print("Establishing connection with TinyG through port " + port)
@@ -42,15 +40,6 @@ print("TinyG found! Connection established.")
 
 
 spfdb = mdb.connect('localhost', 'tinyg', 'ms', 'spfdb');
-
-
-def setPin(solenoid, state):
-    print "writing this out to the arduino"
-    #arduino.write("!")
-    #arduino.write(chr(solenoidMapping(solenoid)))
-    #arduino.write(chr(state))
-    print "told arduino to set %s to %d" % (solenoid, state)
-
 
 def solenoidMapping(solenoid):
     print solenoid
@@ -137,47 +126,38 @@ def flushReceiveBuffer():
 
 def tabbingCutterUp():
     print("tabbingCutterUp()")
-    setPin("tabbing cutter", 1)
     GPIO.output(8, False)
 
 
 def tabbingCutterDown():
     print("tabbingCutterDown()")
-    setPin("tabbing cutter", 0)
     GPIO.output(8, True)
 
 def pickHeadUp():
     print("pickHeadUp()")
-    setPin("pick head", 1)
     GPIO.output(10, False)
 
 def pickHeadDown():
     print("pickHeadDown()")
-    setPin('pick head', 0)
-
     GPIO.output(10, True)
 
 def backingPusherIn():
     print("backingPusherIn()")
-    setPin("backing pusher", 1)
     GPIO.output(22, False)
 
 
 def backingPusherOut():
     print("backingPusherOut()")
-    setPin("backing pusher", 0)
     GPIO.output(22, True)
 
 def suctionSolenoidOn():
     print("suctionSolenoidOn()")
     GPIO.output(24, True)
-    setPin("suction", 1)
     print("danger will robinson")
 
 def suctionSolenoidOff():
     print("suctionSolenoidOff()")
     GPIO.output(24, False)
-    setPin("suction", 0)
 
 def compressorOn():
     print("compressorOn()")
@@ -190,12 +170,10 @@ def compressorOff():
 def vacuumPumpOn():
     print("vacuumPumpOn()")
     GPIO.output(18, True)
-    setPin("vacuum pump", 1)
 
 def vacuumPumpOff():
     print("vacuumPumpOff()")
     GPIO.output(18, False)
-    setPin("vacuum pump", 0)
 
 def eStop():
     print("eStop()")
